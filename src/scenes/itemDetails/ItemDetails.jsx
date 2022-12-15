@@ -12,6 +12,7 @@ import { addToCart } from "../../state";
 import { useDispatch } from "react-redux";
 
 const ItemDetails = () => {
+  // const [details, setDetails] = useState ([]);
   const dispatch = useDispatch();
   const { itemId } = useParams();
   const [value, setValue] = useState("description");
@@ -23,9 +24,10 @@ const ItemDetails = () => {
     setValue(newValue);
   };
 
+
   async function getItem() {
     const item = await fetch(
-      `http://localhost:2000/api/items/${itemId}?populate=image`,
+      `http://localhost:3000/items/${itemId}?populate=image`,
       {
         method: "GET",
       }
@@ -36,7 +38,7 @@ const ItemDetails = () => {
 
   async function getItems() {
     const items = await fetch(
-      `http://localhost:2000/api/items?populate=image`,
+      `http://localhost:3000/items?populate=image`,
       {
         method: "GET",
       }
@@ -56,10 +58,10 @@ const ItemDetails = () => {
         {/* IMAGES */}
         <Box flex="1 1 40%" mb="40px">
           <img
-            alt={item?.name}
+            alt={item.name}
             width="100%"
             height="100%"
-            src={`http://localhost:2000${item?.attributes?.image?.data?.attributes?.formats?.medium?.url}`}
+            src={item.imageUrl}
             style={{ objectFit: "contain" }}
           />
         </Box>
@@ -72,8 +74,8 @@ const ItemDetails = () => {
           </Box>
 
           <Box m="65px 0 25px 0">
-            <Typography variant="h3">{item?.attributes?.name}</Typography>
-            <Typography>${item?.attributes?.price}</Typography>
+            <Typography variant="h3">{item.name}</Typography>
+            <Typography>${item.price}</Typography>
             <Typography sx={{ mt: "20px" }}>
               {item?.attributes?.longDescription}
             </Typography>
@@ -127,7 +129,7 @@ const ItemDetails = () => {
       </Box>
       <Box display="flex" flexWrap="wrap" gap="15px">
         {value === "description" && (
-          <div>{item?.attributes?.longDescription}</div>
+          <div>{item.longDescription}</div>
         )}
         {value === "reviews" && <div>reviews</div>}
       </Box>

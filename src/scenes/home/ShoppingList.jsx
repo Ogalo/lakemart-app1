@@ -20,7 +20,7 @@ const ShoppingList = () => {
 
   async function getItems() {
     const items = await fetch(
-      "http://localhost:2000/api/items?populate=image",
+      "http://localhost:3000/items",
       { method: "GET" }
     );
     const itemsJson = await items.json();
@@ -31,14 +31,20 @@ const ShoppingList = () => {
     getItems();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const topRatedItems = items.filter(
-    (item) => item.attributes.category === "topRated"
+  const cleaningHouseholdsItems = items.filter(
+    (item) => item.attributes.category === "cleaningHouseholds"
   );
-  const newArrivalsItems = items.filter(
-    (item) => item.attributes.category === "newArrivals"
+  const freshFoodItems = items.filter(
+    (item) => item.attributes.category === "freshFood"
   );
-  const bestSellersItems = items.filter(
-    (item) => item.attributes.category === "bestSellers"
+  const beverageItems = items.filter(
+    (item) => item.attributes.category === "beverage"
+  );
+  const babyProductsItems = items.filter(
+    (item) => item.attributes.category === "babyProducts"
+  );
+  const healthFitnessItems = items.filter(
+    (item) => item.attributes.category === "healthFitness"
   );
 
   return (
@@ -61,9 +67,12 @@ const ShoppingList = () => {
         }}
       >
         <Tab label="ALL" value="all" />
-        <Tab label="NEW ARRIVALS" value="newArrivals" />
-        <Tab label="BEST SELLERS" value="bestSellers" />
-        <Tab label="TOP RATED" value="topRated" />
+        <Tab label="FRESH FOODS" value="freshFood" />
+        <Tab label="BEVERAGES" value="beverage" />
+        <Tab label="BABY PRODUCTS" value="babyProducts" />
+        <Tab label="CLEANING & HOUSEHOLD" value="cleaningHouseholds" />
+        <Tab label="HEALTH & FITNESS" value="healthFitness
+        " />
       </Tabs>
       <Box
         margin="0 auto"
@@ -77,16 +86,24 @@ const ShoppingList = () => {
           items.map((item) => (
             <Item item={item} key={`${item.name}-${item.id}`} />
           ))}
-        {value === "newArrivals" &&
-          newArrivalsItems.map((item) => (
+        {value === "freshFood" &&
+          freshFoodItems.map((item) => (
             <Item item={item} key={`${item.name}-${item.id}`} />
           ))}
-        {value === "bestSellers" &&
-          bestSellersItems.map((item) => (
+        {value === "beverage" &&
+          beverageItems.map((item) => (
             <Item item={item} key={`${item.name}-${item.id}`} />
           ))}
-        {value === "topRated" &&
-          topRatedItems.map((item) => (
+        {value === "cleaningHouseholds" &&
+          cleaningHouseholdsItems.map((item) => (
+            <Item item={item} key={`${item.name}-${item.id}`} />
+          ))}
+          {value === "babyProducts" &&
+          babyProductsItems.map((item) => (
+            <Item item={item} key={`${item.name}-${item.id}`} />
+          ))}
+           {value === "healthFitness" &&
+          healthFitnessItems.map((item) => (
             <Item item={item} key={`${item.name}-${item.id}`} />
           ))}
       </Box>
